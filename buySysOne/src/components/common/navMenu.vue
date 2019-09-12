@@ -1,0 +1,101 @@
+<template>
+  <div class="navCon">
+    <div class="navHead">
+      <div class="line"></div>
+      <div class="navImg">
+        <div class="imgBox">
+          <img src="http://47.52.130.164/buy/image/website/eaced699b6767b812b592b04c7e61815.png" class="img-log"/>
+        </div>
+      </div>
+      <div style="width: 80%;" class="navs">
+        <el-menu :default-active="onRoutes" background-color="#4f4e4c" text-color="#fff"
+                 active-text-color="#14ceb2" class="el-menu-demo navBox" mode="horizontal" @select="handleSelect"
+                 unique-opened router>
+          <el-menu-item index="loginHome"><i class="el-icon-house"></i>首页</el-menu-item>
+          <el-menu-item index="taskManage"><i class="el-icon-notebook-1"></i>任务管理</el-menu-item>
+          <el-menu-item index="accountManage"><i class="el-icon-goods"></i>资金管理</el-menu-item>
+          <el-menu-item index="help"><i class="el-icon-message"></i>帮助中心</el-menu-item>
+          <el-submenu index="5" class="userInfoBox">
+            <template slot="title"><i class="el-icon-s-custom"></i>kyumin</template>
+            <el-menu-item index="userInfo">基本信息</el-menu-item>
+            <el-menu-item index="updatePwd">修改密码</el-menu-item>
+            <el-menu-item index="securitySet">安全设置</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="7" class="loginOut" @click="loginOut"><i class="el-icon-setting"></i>退出
+          </el-menu-item>
+        </el-menu>
+      </div>
+      <div class="disNone">
+        <div>
+          <el-menu :default-active="onRoutes" background-color="#2F4056" text-color="#fff"
+                   active-text-color="#5FB878" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                   unique-opened router>
+            <el-submenu index="5" class="sysItem">
+              <template slot="title">菜单</template>
+              <el-menu-item index="index">首页</el-menu-item>
+              <el-menu-item index="taskManage">任务管理</el-menu-item>
+              <el-menu-item index="accountManage">资金管理</el-menu-item>
+              <el-menu-item index="help">帮助中心</el-menu-item>
+              <el-menu-item index="userInfo">基本信息</el-menu-item>
+              <el-menu-item index="updatePwd">修改密码</el-menu-item>
+              <el-menu-item index="securitySet">安全设置</el-menu-item>
+            </el-submenu>
+            <el-menu-item index="7" class="loginOut" @click="loginOut"><i class="el-icon-s-custom"></i>退出
+            </el-menu-item>
+          </el-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import bus from './bus'
+
+export default {
+  name: 'navMenu',
+  data () {
+    return {
+      activeIndex: '1',
+      activeIndex2: '1'
+    }
+  },
+  created () {
+    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+    bus.$on('collapse', msg => {
+      this.collapse = msg
+    })
+  },
+  computed: {
+    onRoutes () {
+      return this.$route.path.replace('/', '')
+    }
+  },
+  methods: {
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    loginOut () {
+      this.$router.push('/index')
+      sessionStorage.clear()
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .imgBox {
+    width: 225px;
+    display: inline-block;
+  }
+
+  .navBox {
+    position: relative;
+    right:0;
+    height: 60px;
+  }
+.loginIn{
+  position: absolute;
+  right: 100px;
+}
+</style>
